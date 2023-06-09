@@ -6,6 +6,7 @@ import likelion15.mutsa.service.HelloService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,5 +37,10 @@ public class HelloController {
 
         log.info("test hello");
         return modelAndView;
+    }
+
+    @GetMapping("/mypage")
+    public String myPage(Model model) {
+        return "mypage";
     }
 }

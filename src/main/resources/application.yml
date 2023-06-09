@@ -11,6 +11,7 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
+    static-path-pattern: "/static/**"
   datasource:
     url: jdbc:mysql://localhost:3306/likelion15
     username: root
@@ -32,6 +33,13 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false
 
   data:
     web:
