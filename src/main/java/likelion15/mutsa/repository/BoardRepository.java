@@ -2,7 +2,7 @@ package likelion15.mutsa.repository;
 
 import jakarta.persistence.EntityManager;
 import likelion15.mutsa.entity.Board;
-import likelion15.mutsa.entity.User;
+import likelion15.mutsa.entity.enums.DeletedStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +19,14 @@ public class BoardRepository {
     public Board findOne(Long id) {return em.find(Board.class, id);}
 
     public List<Board> findByUserId(Long userId) {
-        return em.createQuery("select b from Board b where b.user.id =:user_id", Board.class)
+        return em.createQuery("select b from Board b where b.user.id =:user_id and b.content.isDeleted =:isDeleted", Board.class)
                 .setParameter("user_id", userId)
+                .setParameter("isDeleted", DeletedStatus.NONE)
                 .getResultList();
+    }
+
+    public void deleteBoard(Long id) {
+        em.createQuery("delete from Board b where b.id =:boardId", Board.class)
+                .setParameter("boardId", id);
     }
 }

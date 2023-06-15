@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -77,7 +76,7 @@ class BoardServiceTest {
         boardService.writeComment(saveId1, 2L, "2번 게시글에 쓴 두번째 댓글입니다.");
 
         List<Board> result1 = boardService.findOnesBoards(saveId1);
-        List<Comment> result2 = boardService.findOnesComments(saveId1);
+        List<Comment> result2 = boardService.findOnesComments(userService.findOne(saveId1).getName());
         for (Board article :
                 result1) {
             System.out.printf("작성자: %s, 글제목: %s, 글내용: %s\n",
@@ -89,7 +88,7 @@ class BoardServiceTest {
         for (Comment comment :
                 result2) {
             System.out.printf("작성자: %s, 글제목: %s, 댓글내용: %s\n",
-                    comment.getUser().getRealName(),
+                    comment.getUsername(),
                     comment.getBoard().getContent().getTitle(),
                     comment.getComment()
             );
@@ -97,14 +96,6 @@ class BoardServiceTest {
 
     }
 
-    @Test
-    public void writeCoomment() throws Exception {
-        //given
 
-        //when
-
-        //then
-
-    }
 
 }

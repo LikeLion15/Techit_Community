@@ -1,6 +1,6 @@
 package likelion15.mutsa.service;
 
-import jakarta.persistence.EntityManager;
+
 import likelion15.mutsa.entity.Board;
 import likelion15.mutsa.entity.Comment;
 import likelion15.mutsa.entity.User;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -60,6 +61,28 @@ public class BoardService {
         return comment.getId();
     }
 
+    @Transactional
+    public void deleteBoard(Long id) {
+        Optional<Board> board =
+                Optional.ofNullable(this.boardRepository.findOne(id));
+        if (board.isPresent()) {
+            this.boardRepository.deleteBoard(id);
+        }
+        else {
+            System.out.println("could not find");
+        }
+    }
+    @Transactional
+    public void deleteComment(Long id) {
+        Optional<Comment> comment =
+                Optional.ofNullable(this.commentRepository.findOne(id));
+        if (comment.isPresent()) {
+            this.commentRepository.deleteComment(id);
+        }
+        else {
+            System.out.println("could not find");
+        }
+    }
 
     // 한 유저가 쓴 모든 글 조회
     public List<Board> findOnesBoards(Long userId) {return boardRepository.findByUserId(userId);}
